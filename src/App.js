@@ -1,4 +1,6 @@
-import logo from './logo.svg';
+
+import Cat from './components/Cat';
+import DropDown from './components/DropDown';
 import './App.css';
 import Home from './components/Home';
 import AddProducts from './components/AddProducts';
@@ -11,6 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
+
+  
   return (
     <Router>
     
@@ -28,6 +32,8 @@ function App() {
       <Link to='contactus' className='btn btn-dark text-white m-3 btn-outline-info'> ContactUs</Link>
       <Link to='/signup'className='btn btn-primary text-white  px-4 py-2" m-7 btn-outline-info'>SignUP NOW</Link>
 
+
+
        </nav>
 
    <Routes>
@@ -39,6 +45,8 @@ function App() {
     <Route path='/aboutus' element={<AboutUs/>}/>
     <Route path='/contactus' element={<ContactUs/>}/>
     <Route path='/signup' element={<SignUp/>} />
+     <Route path='/cat' element={<Cat/>} />
+
 
 
 

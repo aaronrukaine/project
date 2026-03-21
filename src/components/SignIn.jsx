@@ -60,10 +60,10 @@ const SignIn = () => {
   return (
    <div className='row justify-content-center'> 
 
-    <div className='col-md-6 card shadow' >
+    <div className='col-md-6 card shadow bg-dark ' >
       <h1>Sign In</h1>
 
-      <form action="" onSubmit={submit}>
+      <form action="" onSubmit={submit} >
         <p className='text-warning'>{loading}</p>
         <p className='text-success'>{success}</p>
         <p className='text-danger'>{error}</p>
