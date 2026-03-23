@@ -1,206 +1,208 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Dropdown, Navbar, Nav, Form, FormControl, Container } from 'react-bootstrap';
-import AddProducts from './AddProducts';
+
 const GetProducts = () => {
-  const [loading,setLoading]=useState('')
-  const [error,setError]=useState('')
+  const [products, setProducts] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState("")
+  const [searchTerm, setSearchTerm] = useState("") // ADDED
+  const [loading, setLoading] = useState("")
+  const [error, setError] = useState("")
 
-  // store all the products we have
-  const [products,setProducts]=useState([])
+  const navigate = useNavigate()
+  const image_url = 'http://tarayia.alwaysdata.net/static/images/'
 
-  const navigate=useNavigate()
-
-  const image_url='http://tarayia.alwaysdata.net/static/images/'
-  // CREATE A FUNCTION TO GET OUR PRODUCTS FROM api
-  const fetchProducts=async()=>{
-    setLoading('Please wait as we retrieve your products')
+  const fetchProducts = async () => {
+    setLoading("Loading products...")
     try {
-      const response=await axios.get('http://tarayia.alwaysdata.net/api/getproductdetails')
-     
-      setProducts(response.data)
-      setLoading('')
-    } catch (error) {
-      setLoading('')
-      setError(error.message)
-      
+      const res = await axios.get('http://tarayia.alwaysdata.net/api/getproductdetails')
+
+      console.log("API DATA:", res.data) // DEBUG
+
+      setProducts(Array.isArray(res.data) ? res.data : [])
+      setLoading("")
+    } catch (err) {
+      setError(err.message)
+      setLoading("")
     }
   }
 
-  //end  of function to call the useeffect
-  useEffect(()=>{
+  useEffect(() => {
     fetchProducts()
-  },[])
+  }, [])
+
+  // FULL FILTER (CATEGORY + SEARCH)
+  const filteredProducts = products.filter((p) => {
+    const category =
+      (p.category ||
+        p.category_name ||
+        p.product_category ||
+        "")
+        .toString()
+        .toLowerCase()
+
+    const name = (p.product_name || "").toLowerCase()
+    const description = (p.product_description || "").toLowerCase()
+    const search = searchTerm.toLowerCase()
+
+    return (
+      (selectedCategory ? category === selectedCategory.toLowerCase() : true) &&
+      (
+        name.includes(search) ||
+        description.includes(search) ||
+        category.includes(search)
+      )
+    )
+  })
+
   return (
-    <div className='row'>
+    <div>
 
-
-       <Navbar bg="primary" expand="md" variant="dark">
-      <Container>
-        <Navbar.Brand href="/home">PetHub</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Dropdown>
-              <Dropdown.Toggle variant="primary" id="dropdown-pet">
-                Shop By Pet
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href="/cat">Cat</Dropdown.Item>
-                <Dropdown.Item href="#kitten">Kitten</Dropdown.Item>
-                <Dropdown.Item href="#dog">Dog</Dropdown.Item>
-                <Dropdown.Item href="#puppy">Puppy</Dropdown.Item>
-                <Dropdown.Item href="#bird">Bird</Dropdown.Item>
-                <Dropdown.Item href="#rabbit">Rabbit</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-
-           
-
-            <Nav.Link href="#offers" className="ms-2">Offers</Nav.Link>
-            <Nav.Link href="#new" className="ms-2">New Arrivals</Nav.Link>
-          </Nav>
-
-          <Form className="d-flex">
-            <FormControl
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-          </Form>
-
-          <Nav>
-            <Nav.Link href="#account"><i className="bi bi-person"></i></Nav.Link>
-            <Nav.Link href="#cart"><i className="bi bi-cart"></i></Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
       
 
-
-
- {/* Heading (replacing marquee) */}
-      <div className="bg-dark text-center py-2">
-        <marquee className="text-white" behavior="" direction="">Welcome to Tara Pet Store!</marquee>
+       {/*  CAROUSEL (NOW CLOSED PROPERLY) */}
+      <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
         
-      </div>
+        <div className="carousel-inner">
+          
+          <div className="carousel-item active">
+            <img src="/img/yjpg.webp" className="d-block w-100" height="400" alt="slide1" />
+          </div>
 
-      {/* Carousel */}
-      <section className="row">
-        <div className="col-md-12">
+          <div className="carousel-item">
+            <img src="/img/ctabanner1.jpg.webp" className="d-block w-100" height="400" alt="slide2" />
+          </div>
 
-          <div id="carousel" className="carousel slide" data-bs-ride="carousel">
+          <div className="carousel-item">
+            <img src="/img/dam.jpg" className="d-block w-100" height="400" alt="slide3" />
+          </div>
 
-            <div className="carousel-inner">
+           <div className="carousel-item">
+            <img src="/img/dod.jpg" className="d-block w-100" height="400" alt="slide3" />
+          </div>
 
-              <div className="carousel-item active">
-                <img
-                  src="/img/ctabanner1.jpg.webp"
-                  alt=""
-                  className="w-100 d-block"
-                  height="400px"
-                />
-              </div>
+        </div>
 
-              <div className="carousel-item">
-                <img
-                  src="/img/dod.jp"
-                  alt=""
-                  className="w-100 d-block"
-                  height="400px"
-                />
-              </div>
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon"></span>
+        </button>
 
-              <div className="carousel-item">
-                <img
-                  src="/img/dam.jpg"
-                  alt=""
-                  className="w-100 d-block"
-                  height="400px"
-                />
-              </div>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span className="carousel-control-next-icon"></span>
+        </button>
 
-              <div className="carousel-item">
-                <img
-                  src="/img/yjpg.webp"
-                  alt=""
-                  className="w-100 d-block"
-                  height="400px"
-                />
+      </div> {/*  THIS WAS MISSING */}
+
+      {/*  NAVBAR */}
+      <Navbar bg="dark" expand="md" variant="dark">
+        <Container>
+          <Navbar.Brand>PetHub</Navbar.Brand>
+
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+
+            <Nav className="me-auto">
+              <Dropdown>
+                <Dropdown.Toggle>
+                  Shop By Pet
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {["Cat","Food"].map(cat => (
+                    <Dropdown.Item
+                      key={`/cat/${cat.toLowerCase()}`}
+                      onClick={() => setSelectedCategory(cat)}
+                    >
+                      {cat}
+                    </Dropdown.Item>
+                  ))}
+
+                  <Dropdown.Divider />
+
+                  <Dropdown.Item onClick={() => setSelectedCategory("")}>
+                    All Products
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              
+            </Nav>
+
+            {/*  WORKING SEARCH */}
+            <Form className="d-flex ms-3">
+              <FormControl 
+                placeholder="Search products..."
+                style={{ width: "250px" }}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form>
+
+            <Link to="/addproducts" className="btn btn-dark ms-3">
+              Add Product
+            </Link>
+            <br />
+            <Link to='/signup'className='btn btn-dark text-white  px-4 py-2" m-7 btn-outline-warning'>SignUP NOW</Link>
+
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+      {/* PRODUCTS */}
+      <div className="row">
+        <h3 className="text-center mt-3">
+          {selectedCategory ? `${selectedCategory} Products` : "All Products"}
+        </h3>
+
+        <p className="text-danger text-center">{error}</p>
+        <p className="text-warning text-center">{loading}</p>
+
+        {filteredProducts.length === 0 && !loading && (
+          <h5 className="text-center text-muted mt-4">
+            No products found
+          </h5>
+        )}
+
+        {filteredProducts.map((product, index) => (
+          <div key={product.id || index} className="col-md-4">
+            <div className="card m-3 shadow">
+
+              <img
+                src={image_url + product.product_photo}
+                alt=""
+                height="200"
+                style={{ objectFit: "cover" }}
+              />
+
+              <div className="card-body">
+                <h5>{product.product_name}</h5>
+                <p>{product.product_description}</p>
+
+                <p className="text-warning">
+                  KES {product.product_cost}
+                </p>
+
+                <button
+                  className="btn btn-info w-100"
+                  onClick={() =>
+                    navigate('/mpesa', { state: { product } })
+                  }
+                >
+                  Buy Now
+                </button>
               </div>
 
             </div>
-
-            {/* Controls */}
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carousel"
-              data-bs-slide="prev"
-            >
-              <span className="carousel-control-prev-icon bg-danger"></span>
-            </button>
-
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carousel"
-              data-bs-slide="next"
-            >
-              <span className="carousel-control-next-icon bg-danger"></span>
-            </button>
-
           </div>
+        ))}
+      </div>
 
-        </div>
-      </section>
-
-
-
-
-
-
-
-        <h1>Available Products</h1>
-
-        <p className='text-danger'>{error}</p>
-        <p className='text-warning'>{loading}</p>
-        {/* loop through our product */}
-        {/* dot map --javascript object that allows you to Itterate over each product  and display it one by one */}
-        {products.map((product)=>(
-
-        
-
-       
-
-         
-         
-
-        <div className='col-md-4 justify-content-center '>
-          <div className='card shadow m-4'>
-          <img src={image_url+ product.product_photo} alt="cake" className='product_img mt-4'/>
-
-          <div className='card-body'>
-            <h4 className='text-success'  >{product.product_name}</h4>
-            <p className='text-secondary'>{product.product_description}.</p>
-            <p className='text-warning'>{product.product_cost}</p>
-             <input  type="submit" className='btn bg-info  form-control w-100 ' value='Purchase Now' onClick={() => navigate('/mpesa', { state: { product } })} />
-
-          </div>
-
-        </div>
-    
-          </div>
-    ))}
     </div>
   )
 }
 
-export default GetProducts
+export default GetProducts;
+

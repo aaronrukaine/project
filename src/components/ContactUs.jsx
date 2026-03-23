@@ -6,12 +6,22 @@ const ContactUs = () => {
 
       {/* Lets Talk Section */}
       <div>
-        <h1 className="mb-4">Let's Talk</h1>
+        <h1 className="mb-4 text-center">Let's Talk</h1>
 
-        <div className="d-flex justify-content-start gap-4 flex-wrap">
+        <div 
+          className="d-flex gap-4"
+          style={{
+            overflowX: "auto",
+            whiteSpace: "nowrap",
+            paddingBottom: "10px"
+          }}
+        >
 
           {/* Phone Support */}
-          <div className="d-flex align-items-center p-3 border rounded bg-light" style={{ minWidth: "250px" }}>
+          <div 
+            className="d-flex align-items-center p-3 border rounded bg-light"
+            style={{ minWidth: "260px", flexShrink: 0 }}
+          >
             <img 
               src="/img/phone.png" 
               alt="Phone" 
@@ -20,13 +30,16 @@ const ContactUs = () => {
               style={{ objectFit: "contain", marginRight: "15px" }} 
             />
             <div>
-              <b><h5 className="mb-1">+254711803601</h5></b>
+              <h5 className="mb-1 fw-bold">+254711803601</h5>
               <h6 className="mb-0">Phone support</h6>
             </div>
           </div>
 
           {/* WhatsApp Support */}
-          <div className="d-flex align-items-center p-3 border rounded bg-light" style={{ minWidth: "250px" }}>
+          <div 
+            className="d-flex align-items-center p-3 border rounded bg-light"
+            style={{ minWidth: "260px", flexShrink: 0 }}
+          >
             <img 
               src="/img/whatsapp.jpeg" 
               alt="WhatsApp" 
@@ -35,13 +48,16 @@ const ContactUs = () => {
               style={{ objectFit: "contain", marginRight: "15px" }} 
             />
             <div>
-              <b><h5 className="mb-1">+254787531295</h5></b>
+              <h5 className="mb-1 fw-bold">+254787531295</h5>
               <h6 className="mb-0">WhatsApp support</h6>
             </div>
           </div>
 
           {/* Instagram Support */}
-          <div className="d-flex align-items-center p-3 border rounded bg-light" style={{ minWidth: "250px" }}>
+          <div 
+            className="d-flex align-items-center p-3 border rounded bg-light"
+            style={{ minWidth: "260px", flexShrink: 0 }}
+          >
             <img 
               src="/img/in.png" 
               alt="Instagram" 
@@ -50,13 +66,16 @@ const ContactUs = () => {
               style={{ objectFit: "contain", marginRight: "15px" }} 
             />
             <div>
-              <b><h5 className="mb-1">@taraperstore</h5></b>
+              <h5 className="mb-1 fw-bold">@taraperstore</h5>
               <h6 className="mb-0">Instagram</h6>
             </div>
           </div>
 
           {/* Twitter / X Support */}
-          <div className="d-flex align-items-center p-3 border rounded bg-light" style={{ minWidth: "250px" }}>
+          <div 
+            className="d-flex align-items-center p-3 border rounded bg-light"
+            style={{ minWidth: "260px", flexShrink: 0 }}
+          >
             <img 
               src="/img/x.png" 
               alt="X / Twitter" 
@@ -65,13 +84,16 @@ const ContactUs = () => {
               style={{ objectFit: "contain", marginRight: "15px" }} 
             />
             <div>
-              <b><h5 className="mb-1">@tarapetstore</h5></b>
+              <h5 className="mb-1 fw-bold">@tarapetstore</h5>
               <h6 className="mb-0">Twitter</h6>
             </div>
           </div>
 
           {/* Facebook Support */}
-          <div className="d-flex align-items-center p-3 border rounded bg-light" style={{ minWidth: "250px" }}>
+          <div 
+            className="d-flex align-items-center p-3 border rounded bg-light"
+            style={{ minWidth: "260px", flexShrink: 0 }}
+          >
             <img 
               src="/img/fb.png" 
               alt="Facebook" 
@@ -80,7 +102,7 @@ const ContactUs = () => {
               style={{ objectFit: "contain", marginRight: "15px" }} 
             />
             <div>
-              <b><h5 className="mb-1">/yourFacebookPage</h5></b>
+              <h5 className="mb-1 fw-bold">/yourFacebookPage</h5>
               <h6 className="mb-0">Facebook</h6>
             </div>
           </div>
@@ -88,11 +110,11 @@ const ContactUs = () => {
         </div>
       </div>
 
-      {/* About, Contact Form, Stay Connected */}
-      <div className="row mt-5">
+      {/* Bottom Section */}
+      <div className="row mt-5 dark-section">
 
         {/* About Us */}
-        <div className="col-md-4 text-white mb-4 bg-dark p-4 rounded">
+        <div className="col-md-4 text-white mb-4 p-4">
           <h4>About Us</h4>
           <p>
             Tara Pet Store Ltd is dedicated to providing healthy pets and care services. 
@@ -102,7 +124,7 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="col-md-4 bg-dark text-success p-4 mb-4 rounded">
+        <div className="col-md-4 text-success p-4 mb-4">
           <h4>Contact Us</h4>
           <form>
             <input 
@@ -117,17 +139,17 @@ const ContactUs = () => {
             ></textarea>
             <input 
               type="submit" 
-              className="btn btn-danger w-100" 
+              className="btn btn-danger w-100 py-2 fw-bold"
               value="Send Message" 
             />
           </form>
         </div>
 
         {/* Stay Connected */}
-        <div className="col-md-4 text-white mb-4 bg-dark p-4 rounded">
+        <div className="col-md-4 text-white mb-4 p-4">
           <h4>Stay Connected</h4>
 
-          <div className="mb-3 d-flex gap-2">
+          <div className="mb-3 d-flex gap-3">
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
               <img src="/img/fb.png" alt="Facebook" width="40" />
             </a>
@@ -152,8 +174,28 @@ const ContactUs = () => {
           Developed by Tarayia &copy; All rights reserved
         </b>
       </footer>
+
+      {/* Extra Styles */}
+      <style>
+        {`
+          .dark-section {
+            background: linear-gradient(to right, #1c1c1c, #2c2c2c);
+            border-radius: 10px;
+          }
+
+          /* Optional scrollbar styling */
+          .d-flex::-webkit-scrollbar {
+            height: 6px;
+          }
+          .d-flex::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+          }
+        `}
+      </style>
+
     </div>
   );
-}
+};
 
 export default ContactUs;

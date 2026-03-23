@@ -1,34 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddProducts = ({ categories = [] }) => {
+const AddProducts = () => {
   const [product_name, setProductname] = useState("");
   const [product_description, setProductdescription] = useState("");
   const [product_cost, setProductcost] = useState("");
   const [product_photo, setProductphoto] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [loading, setLoading] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  // fallback categories (your screenshot ones)
-  const fallbackCategories = [
-    "Cat",
-    "Kitten",
-    "Dog",
-    "Puppy",
-    "Bird",
-    "Rabbit"
-  ];
-
   const submit = async (e) => {
     e.preventDefault();
-
-    if (!selectedCategory) {
-      setError("Please select a category");
-      return;
-    }
 
     try {
       setLoading("Uploading...");
@@ -39,7 +23,6 @@ const AddProducts = ({ categories = [] }) => {
       data.append("product_name", product_name);
       data.append("product_description", product_description);
       data.append("product_cost", product_cost);
-      data.append("category", selectedCategory);
 
       if (product_photo) {
         data.append("product_photo", product_photo);
@@ -52,12 +35,11 @@ const AddProducts = ({ categories = [] }) => {
 
       setSuccess(res.data.message || "Product uploaded successfully");
 
-      // reset form
+      // Reset form
       setProductname("");
       setProductdescription("");
       setProductcost("");
       setProductphoto(null);
-      setSelectedCategory("");
 
     } catch (err) {
       setError(
@@ -68,25 +50,17 @@ const AddProducts = ({ categories = [] }) => {
     }
   };
 
-  // decide which categories to use
-  const categoryList =
-    categories.length > 0 ? categories : fallbackCategories;
-
   return (
-    <div className="col-md-6 mx-auto card p-3 shadow">
-      <h4 className="text-center">Upload Product</h4>
+    <div className="col-md-6 mx-auto card p-3 shadow mt-3">
+      <h4 className="text-center">Upload Pet</h4>
 
-      {/* DEBUG */}
-      <p className="text-muted">
-        Categories loaded: {categoryList.length}
-      </p>
+      <form onSubmit={submit} className="bg-dark p-3 text-white rounded">
 
-      <form onSubmit={submit}>
         <p className="text-warning">{loading}</p>
         <p className="text-success">{success}</p>
         <p className="text-danger">{error}</p>
 
-        {/* NAME */}
+        {/* Product Name */}
         <input
           className="form-control mb-2"
           placeholder="Product Name"
@@ -95,7 +69,7 @@ const AddProducts = ({ categories = [] }) => {
           required
         />
 
-        {/* DESCRIPTION */}
+        {/* Description */}
         <textarea
           className="form-control mb-2"
           placeholder="Product Description"
@@ -104,7 +78,7 @@ const AddProducts = ({ categories = [] }) => {
           required
         />
 
-        {/* COST */}
+        {/* Cost */}
         <input
           type="number"
           className="form-control mb-2"
@@ -114,39 +88,21 @@ const AddProducts = ({ categories = [] }) => {
           required
         />
 
-        {/* IMAGE */}
+        {/* Image Upload */}
         <input
           type="file"
-          className="form-control mb-2"
+          className="form-control mb-3"
           onChange={(e) => setProductphoto(e.target.files[0])}
         />
 
-        {/* CATEGORY DROPDOWN */}
-        <select
-          className="form-control mb-3"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          required
-        >
-          <option value="">Select Category</option>
-
-          {categoryList.map((cat, index) => (
-            <option
-              key={cat.id || index}
-              value={cat.id || cat}
-            >
-              {cat.name || cat}
-            </option>
-          ))}
-        </select>
-
-        {/* BUTTON */}
+        {/* Button */}
         <button
-          className="btn btn-info w-100 text-white"
+          className="btn btn-info w-100 py-2 fw-bold text-white"
           disabled={loading}
         >
           {loading ? "Uploading..." : "Upload Product"}
         </button>
+
       </form>
     </div>
   );

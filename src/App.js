@@ -30,7 +30,7 @@ function App() {
       <Link to='/signin'className='btn btn-dark text-white m-3 btn-outline-info'>SignIn</Link>
       <Link to='/aboutus' className='btn btn-dark text-white m-3 btn-outline-info'> AboutUs</Link>
       <Link to='contactus' className='btn btn-dark text-white m-3 btn-outline-info'> ContactUs</Link>
-      <Link to='/signup'className='btn btn-primary text-white  px-4 py-2" m-7 btn-outline-info'>SignUP NOW</Link>
+      
 
 
 
