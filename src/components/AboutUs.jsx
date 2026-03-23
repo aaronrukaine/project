@@ -30,8 +30,8 @@ const AboutUs = () => {
     <div className="container my-5">
 
       {/* Hero Section */}
-      <div className="text-center mb-5">
-        <h1 className="display-4 text-primary mb-3">Welcome to Tara Pet Store</h1>
+      <div className="hero-section text-center mb-5">
+        <h1 className="display-4 text-primary fw-bold mb-3">Welcome to Tara Pet Store</h1>
         <p className="lead text-muted">
           Caring for your pets with love, quality, and passion. Explore our products and services designed for your furry friends.
         </p>
@@ -41,7 +41,7 @@ const AboutUs = () => {
       <div className="row g-4 mb-5">
         {sectors.map((item, index) => (
           <div key={index} className="col-md-3">
-            <div className="sector-card p-3 rounded shadow h-100">
+            <div className="sector-card glass-card p-4 h-100">
               <h5 className="text-success">{item.title}</h5>
               <p>{item.text}</p>
             </div>
@@ -49,11 +49,12 @@ const AboutUs = () => {
         ))}
       </div>
 
-      {/* About & Contact Section */}
+      {/* About, Contact, Socials */}
       <div className="row g-4 mb-5">
+
         {/* About Us */}
         <div className="col-md-4">
-          <div className="p-4 rounded shadow about-card h-100">
+          <div className="about-card glass-card p-4 h-100">
             <h3 className="text-primary mb-3">Know Us</h3>
             <p>
               Tara Pet Store Ltd is dedicated to providing healthy pets and care services. 
@@ -65,19 +66,19 @@ const AboutUs = () => {
 
         {/* Contact Form */}
         <div className="col-md-4">
-          <div className="p-4 rounded shadow contact-card h-100">
+          <div className="contact-card glass-card p-4 h-100">
             <h3 className="text-primary mb-3">Contact Us</h3>
             <form>
               <input type="email" placeholder="Enter your email" className="form-control mb-3" />
               <textarea placeholder="Leave a comment" className="form-control mb-3" rows="3"></textarea>
-              <input type="submit" className="btn btn-primary w-100" value="Send Message" />
+              <input type="submit" className="btn w-100 premium-btn" value="Send Message" />
             </form>
           </div>
         </div>
 
         {/* Social & Info */}
         <div className="col-md-4">
-          <div className="p-4 rounded shadow social-card h-100">
+          <div className="social-card glass-card p-4 h-100">
             <h3 className="text-primary mb-3">Stay Connected</h3>
             <div className="mb-3 d-flex align-items-center gap-3">
               {socials.map((social, i) => (
@@ -91,10 +92,11 @@ const AboutUs = () => {
             <p><b>Email:</b> pethub@gmail.com</p>
           </div>
         </div>
+
       </div>
 
       {/* Footer */}
-      <footer className="text-center p-4 rounded mt-5 footer">
+      <footer className="footer text-center p-4 mt-5">
         <b>Developed by Tarayia &copy; All rights reserved</b>
       </footer>
     </div>
