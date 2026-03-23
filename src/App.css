@@ -41,8 +41,91 @@
 }
 .img:hover{
   transition: 1ms;
+  transform: scale(1.1);
+}
+.App-img:hover{
+
+transition: 1ms;
   transform: scale(0.8);
 }
+.hover-img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
+.hover-img:hover {
+  transform: scale(1.1); /* zoom effect */
+  opacity: 0.8; /* optional fade */
+}
+.hover-image:hover {
+  transform: translateX(-10px); /* move left */
+}
+
+.custom-btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(45deg, #6a11cb, #2575fc); /* gradient */
+  border: none;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Hover effects */
+.custom-btn:hover {
+  transform: translateY(-4px) scale(1.05); /* lifts up */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35); /* deeper shadow */
+  background: linear-gradient(45deg, #2575fc, #6a11cb); /* gradient swap */
+  color: #fff;
+}
+
+/* Card styles */
+.sector-card {
+  background: linear-gradient(135deg, #e0f7fa, #fff);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.sector-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+.about-card {
+  background: linear-gradient(135deg, #dcedc8, #fff);
+}
+
+.contact-card {
+  background: linear-gradient(135deg, #fff9c4, #fff);
+}
+
+.social-card {
+  background: linear-gradient(135deg, #ffe0b2, #fff);
+}
+
+/* Social icons hover */
+.hover-icon {
+  transition: transform 0.3s, filter 0.3s;
+}
+.hover-icon:hover {
+  transform: scale(1.2);
+  filter: brightness(1.3);
+}
+
+/* Footer */
+.footer {
+  background-color: #343a40;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Form input focus */
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
 
 

@@ -24,13 +24,11 @@ function App() {
       </header>
    
        <nav className='text-white ' id='nav'>
-      <Link to='/'className='btn btn-dark text-white m-3 btn-outline-info' >Home</Link>
-      <Link to='/addproducts'className='btn btn-dark text-white m-3 btn-outline-info'>AddProducts</Link>
-      
-      <Link to='/signin'className='btn btn-dark text-white m-3 btn-outline-info'>SignIn</Link>
-      <Link to='/aboutus' className='btn btn-dark text-white m-3 btn-outline-info'> AboutUs</Link>
-      <Link to='contactus' className='btn btn-dark text-white m-3 btn-outline-info'> ContactUs</Link>
-      
+      <Link to='/' className='custom-btn'>Home</Link>
+  <Link to='/addproducts' className='custom-btn'>Add Products</Link>
+  <Link to='/signin' className='custom-btn'>Sign In</Link>
+  <Link to='/aboutus' className='custom-btn'>About Us</Link>
+  <Link to='/contactus' className='custom-btn'>Contact Us</Link>
 
 
 

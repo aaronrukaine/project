@@ -1,208 +1,147 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { Dropdown, Navbar, Nav, Form, FormControl, Container } from 'react-bootstrap';
 
-const GetProducts = () => {
-  const [products, setProducts] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState("")
-  const [searchTerm, setSearchTerm] = useState("") // ADDED
-  const [loading, setLoading] = useState("")
-  const [error, setError] = useState("")
-
-  const navigate = useNavigate()
-  const image_url = 'http://tarayia.alwaysdata.net/static/images/'
-
-  const fetchProducts = async () => {
-    setLoading("Loading products...")
-    try {
-      const res = await axios.get('http://tarayia.alwaysdata.net/api/getproductdetails')
-
-      console.log("API DATA:", res.data) // DEBUG
-
-      setProducts(Array.isArray(res.data) ? res.data : [])
-      setLoading("")
-    } catch (err) {
-      setError(err.message)
-      setLoading("")
-    }
-  }
+const Home = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const image_url = "http://tarayia.alwaysdata.net/static/images/";
 
   useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  // FULL FILTER (CATEGORY + SEARCH)
-  const filteredProducts = products.filter((p) => {
-    const category =
-      (p.category ||
-        p.category_name ||
-        p.product_category ||
-        "")
-        .toString()
-        .toLowerCase()
-
-    const name = (p.product_name || "").toLowerCase()
-    const description = (p.product_description || "").toLowerCase()
-    const search = searchTerm.toLowerCase()
-
-    return (
-      (selectedCategory ? category === selectedCategory.toLowerCase() : true) &&
-      (
-        name.includes(search) ||
-        description.includes(search) ||
-        category.includes(search)
-      )
-    )
-  })
+    const fetchProducts = async () => {
+      setLoading("Loading products...");
+      try {
+        const res = await axios.get("http://tarayia.alwaysdata.net/api/getproductdetails");
+        setProducts(Array.isArray(res.data) ? res.data : []);
+        setLoading("");
+      } catch (err) {
+        setError(err.message);
+        setLoading("");
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
-    <div>
+    <div className="home-page">
 
-      
-
-       {/*  CAROUSEL (NOW CLOSED PROPERLY) */}
-      <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
-        
+      {/* Carousel */}
+      <div id="carouselExample" className="carousel slide mb-4" data-bs-ride="carousel">
         <div className="carousel-inner">
-          
-          <div className="carousel-item active">
-            <img src="/img/yjpg.webp" className="d-block w-100" height="400" alt="slide1" />
-          </div>
-
-          <div className="carousel-item">
-            <img src="/img/ctabanner1.jpg.webp" className="d-block w-100" height="400" alt="slide2" />
-          </div>
-
-          <div className="carousel-item">
-            <img src="/img/dam.jpg" className="d-block w-100" height="400" alt="slide3" />
-          </div>
-
-           <div className="carousel-item">
-            <img src="/img/dod.jpg" className="d-block w-100" height="400" alt="slide3" />
-          </div>
-
+          {["/img/yjpg.webp","/img/ctabanner1.jpg.webp","/img/dam.jpg","/img/dod.jpg"].map((src, i) => (
+            <div key={i} className={`carousel-item ${i === 0 ? "active" : ""}`}>
+              <img src={src} className="d-block w-100 carousel-img" alt={`slide${i+1}`} />
+            </div>
+          ))}
         </div>
-
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
           <span className="carousel-control-prev-icon"></span>
         </button>
-
         <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
           <span className="carousel-control-next-icon"></span>
         </button>
-
-      </div> {/*  THIS WAS MISSING */}
-
-      {/*  NAVBAR */}
-      <Navbar bg="dark" expand="md" variant="dark">
-        <Container>
-          <Navbar.Brand>PetHub</Navbar.Brand>
-
-          <Navbar.Toggle />
-          <Navbar.Collapse>
-
-            <Nav className="me-auto">
-              <Dropdown>
-                <Dropdown.Toggle>
-                  Shop By Pet
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  {["Cat","Food"].map(cat => (
-                    <Dropdown.Item
-                      key={`/cat/${cat.toLowerCase()}`}
-                      onClick={() => setSelectedCategory(cat)}
-                    >
-                      {cat}
-                    </Dropdown.Item>
-                  ))}
-
-                  <Dropdown.Divider />
-
-                  <Dropdown.Item onClick={() => setSelectedCategory("")}>
-                    All Products
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-
-              
-            </Nav>
-
-            {/*  WORKING SEARCH */}
-            <Form className="d-flex ms-3">
-              <FormControl 
-                placeholder="Search products..."
-                style={{ width: "250px" }}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </Form>
-
-            <Link to="/addproducts" className="btn btn-dark ms-3">
-              Add Product
-            </Link>
-            <br />
-            <Link to='/signup'className='btn btn-dark text-white  px-4 py-2" m-7 btn-outline-warning'>SignUP NOW</Link>
-
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
-      {/* PRODUCTS */}
-      <div className="row">
-        <h3 className="text-center mt-3">
-          {selectedCategory ? `${selectedCategory} Products` : "All Products"}
-        </h3>
-
-        <p className="text-danger text-center">{error}</p>
-        <p className="text-warning text-center">{loading}</p>
-
-        {filteredProducts.length === 0 && !loading && (
-          <h5 className="text-center text-muted mt-4">
-            No products found
-          </h5>
-        )}
-
-        {filteredProducts.map((product, index) => (
-          <div key={product.id || index} className="col-md-4">
-            <div className="card m-3 shadow">
-
-              <img
-                src={image_url + product.product_photo}
-                alt=""
-                height="200"
-                style={{ objectFit: "cover" }}
-              />
-
-              <div className="card-body">
-                <h5>{product.product_name}</h5>
-                <p>{product.product_description}</p>
-
-                <p className="text-warning">
-                  KES {product.product_cost}
-                </p>
-
-                <button
-                  className="btn btn-info w-100"
-                  onClick={() =>
-                    navigate('/mpesa', { state: { product } })
-                  }
-                >
-                  Buy Now
-                </button>
-              </div>
-
-            </div>
-          </div>
-        ))}
       </div>
 
+      {/* Navbar */}
+      <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div className="container">
+          <Link className="navbar-brand" to="/">PetHub</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#!" role="button" data-bs-toggle="dropdown">
+                  Shop By Pet
+                </a>
+                <ul className="dropdown-menu">
+                  <li><a className="dropdown-item" href="#!" onClick={() => {}}>Dogs</a></li>
+                  <li><a className="dropdown-item" href="#!" onClick={() => {}}>Cats</a></li>
+                  <li><a className="dropdown-item" href="#!" onClick={() => {}}>Birds</a></li>
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><a className="dropdown-item" href="#!" onClick={() => {}}>All Products</a></li>
+                </ul>
+              </li>
+            </ul>
+            <Link to="/addproducts" className="btn btn-outline-danger me-2">Add Pet</Link>
+            <Link to="/signup" className="btn btn-outline-warning">Create Account</Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Products Section */}
+      <div className="container">
+        <h3 className="text-center mb-4">All Products</h3>
+        {error && <p className="text-danger text-center">{error}</p>}
+        {loading && <p className="text-warning text-center">{loading}</p>}
+        {!loading && products.length === 0 && <h5 className="text-center text-muted">No products found</h5>}
+
+        <div className="row">
+          {products.map((product, index) => (
+            <div key={product.id || index} className="col-md-4 mb-4">
+              <div className="card product-card h-100 shadow">
+                <img src={image_url + product.product_photo} alt={product.product_name} className="card-img-top product-img"/>
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title">{product.product_name}</h5>
+                  <p className="card-text flex-grow-1">{product.product_description}</p>
+                  <p className="text-warning fw-bold">KES {product.product_cost}</p>
+                  <button className="btn btn-info hover-btn w-100 mt-auto" onClick={() => navigate('/mpesa', { state: { product }})}>Buy Now</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* About Us Section */}
+      <div className="bg-dark text-white py-5">
+        <div className="container text-center">
+          <h2 className="text-primary mb-3">About Tara Pet Store</h2>
+          <p className="lead mb-4">
+            We are dedicated to providing healthy pets and care services. 
+            Explore our wide range of pet food, accessories, and products to keep your pets happy and healthy.
+          </p>
+          <Link to="/aboutus" className="btn btn-outline-light btn-lg">Learn More</Link>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-dark text-center p-4 mt-4 rounded">
+        <b className="text-white">Developed by Tarayia &copy; All rights reserved</b>
+      </footer>
+
+      {/* Extra Styling */}
+      <style>{`
+        .carousel-img {
+          height: 400px;
+          object-fit: cover;
+        }
+        .product-card {
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+        }
+        .hover-btn {
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .hover-btn:hover {
+          transform: translateY(-2px) scale(1.02);
+          box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .product-img {
+          object-fit: cover;
+          height: 250px;
+        }
+      `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default GetProducts;
-
+export default Home;

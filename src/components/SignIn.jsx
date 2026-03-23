@@ -2,93 +2,105 @@ import { Link, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 import axios from 'axios'
 
-
 const SignIn = () => {
-    const [email,setEmail]=useState("")
+  const [email,setEmail]=useState("")
   const [password,setPassword]=useState('')
-
   const [loading,setLoading]=useState("")
   const [success,setSuccess]=useState("")
   const [error,setError]=useState("")
 
-  const navigate = useNavigate('')
-  //function to submit data yo API
+  const navigate = useNavigate()
 
-   const submit=async(e)=>{
+  const submit = async(e) => {
     e.preventDefault()
-    setLoading('Please wait !!!!!!')
-//ADD DATA TO FORM DATA OBJECT
+    setLoading('Please wait...'); 
+    setError(''); 
+    setSuccess('');
+
     try {
-      const data=new FormData()
-      data.append('email',email)
-      data.append('password',password)
-      //calling our api
-      const response=await axios.post('http://tarayia.alwaysdata.net/api/signin',data)
+      const data = new FormData()
+      data.append('email', email)
+      data.append('password', password)
+
+      const response = await axios.post('http://tarayia.alwaysdata.net/api/signin', data)
 
       setLoading('')
-      // check if the response has user item
       if (response.data.user){
-        // if user is not found, store user details in localstorage
-        localStorage.setItem('user',JSON.stringify(response.data.user));
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         setSuccess(response.data.message);
-
-        // ?Redirect to /getproducts
 
         setTimeout(()=>{
           navigate("/")
-        },2000)
+        }, 1500)
 
-      }
-      else{
-        // user not found,show error message
+      } else {
         setError(response.data.message);
-
       }
-
-
       
-      
-    } catch (error) {
+    } catch (err) {
       setLoading('');
-      setError(error.data.message)
-      
-      
+      setError(err.response?.data?.message || "Something went wrong");
     }
   }
-  
 
   return (
-   <div className='row justify-content-center'> 
+    <div className='d-flex justify-content-center align-items-center min-vh-100 bg-light'>
+      <div className='card shadow-lg p-5 rounded' style={{ maxWidth: "400px", width: "100%" }}>
+        <h2 className='text-center mb-4 text-primary'>Sign In</h2>
 
-    <div className='col-md-6 card shadow bg-dark ' >
-      <h1>Sign In</h1>
+        <form onSubmit={submit}>
+          {loading && <p className='text-warning text-center'>{loading}</p>}
+          {success && <p className='text-success text-center'>{success}</p>}
+          {error && <p className='text-danger text-center'>{error}</p>}
 
-      <form action="" onSubmit={submit} >
-        <p className='text-warning'>{loading}</p>
-        <p className='text-success'>{success}</p>
-        <p className='text-danger'>{error}</p>
+          <input 
+            type="email" 
+            className='form-control mb-3' 
+            placeholder='Email' 
+            value={email} 
+            onChange={(e)=>setEmail(e.target.value)}  
+            required
+          />
 
+          <input 
+            type="password" 
+            className='form-control mb-4' 
+            placeholder='Password' 
+            value={password} 
+            onChange={(e)=>setPassword(e.target.value)} 
+            required
+          />
 
-        <input type="email" className='form-control' placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)}  required/>
-        <br />
-        <br />
-        <input type="password" className='form-control' placeholder='password' value={password } onChange={(e)=>setPassword(e.target.value)} required/>
-        <br />
-        <br />
+          <button 
+            type="submit" 
+            className='btn btn-primary w-100 py-2 fw-bold hover-btn mb-3'
+          >
+            Sign In
+          </button>
 
-        <input type="submit" value='Sign In'  className='btn bg-info text-white w-100'/>
+          <p className='text-center'>
+            Don't have an account? <Link to='/signUp'>Sign Up</Link>
+          </p>
+        </form>
 
-        <br />
-        <br />
+      </div>
 
-        <p>Don't have an account? <Link to='/signUp'>Sign Up</Link></p>
-      </form>
-
-
-
-
-    </div>     
-      
+      {/* Extra CSS */}
+      <style>
+        {`
+          .hover-btn {
+            transition: all 0.3s ease;
+          }
+          .hover-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+          }
+          input.form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+          }
+        `}
+      </style>
     </div>
   )
 }

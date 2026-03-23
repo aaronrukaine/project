@@ -1,130 +1,101 @@
-import React from 'react';
+import React from "react";
 
 const AboutUs = () => {
+  const sectors = [
+    {
+      title: "Pet Food & Treats",
+      text: "Largest sector with premium and specialty foods. Companies like Primal Pet Group lead in fresh and minimally processed foods."
+    },
+    {
+      title: "Pet Products & Supplies",
+      text: "Innovative toys, enrichment tools, and accessories are key. KONG is a major player in this category."
+    },
+    {
+      title: "Pet Food Manufacturers",
+      text: "Specialized, nutritious foods by Nestlé Purina PetCare, Mars Petcare, Freshpet, and Diamond Pet Company."
+    },
+    {
+      title: "Veterinary Services",
+      text: "Growing sector with independent practices consolidating into larger networks."
+    }
+  ];
+
+  const socials = [
+    { href: "https://www.facebook.com", src: "/img/fb.png", alt: "Facebook" },
+    { href: "https://www.instagram.com", src: "/img/in.png", alt: "Instagram" },
+    { href: "https://www.x.com", src: "/img/x.png", alt: "X" }
+  ];
+
   return (
-    
-    <div className="row col-md-12">
-      <div className="row ">
-      <div className="row">
+    <div className="container my-5">
 
-        <div className='row col-md-3'>
-          <h2>Pet Food and Treats</h2>
-          <ul>
-            <li>
-              This is the largest sector, dominated by firms like J.M. Smucker, Diamond Pet Foods, United Petfood, and Simmons Pet Food. Specialty, raw, and fresh, or minimally processed foods are growing trends, with companies like Primal Pet Group leading in this space
-            </li>
-            
-          </ul>
-        </div>
-
-        <div className='row col-md-3'>
-          <h2>Pet Products & Supplies</h2>
-          <ul>
-            <li>
-               Innovative toys, enrichment tools, and accessories are key. KONG is a major player in this category.
-            </li>
-            
-            <li>
-              All training programs are available.
-            </li>
-          </ul>
-        </div>
-
-        <div className='row col-md-3'>
-          <h2>Pet Food Manufacturers</h2>
-          <ul>
-            
-            <li>
-              These companies produce specialized, nutritious food. Top companies include Nestlé Purina PetCare and Mars Petcare. Others focus on specific segments, such as Freshpet (fresh food) or Diamond Pet Company (high-quality ingredients)..
-            </li>
-          </ul>
-        </div>
-
-        <div className='row col-md-3'>
-          <h2>Veterinary Services</h2>
-          <ul>
-            <li>
-             A rapidly growing sector, with many independent practices consolidating under larger corporate networks.
-            </li>
-            <li>
-              Provided Advanced Cybersecurity training in collaboration with
-              Think Cyber.
-            </li>
-           
-          </ul>
-        </div>
-
+      {/* Hero Section */}
+      <div className="text-center mb-5">
+        <h1 className="display-4 text-primary mb-3">Welcome to Tara Pet Store</h1>
+        <p className="lead text-muted">
+          Caring for your pets with love, quality, and passion. Explore our products and services designed for your furry friends.
+        </p>
       </div>
-    </div>
-      <div className="row justify-content-center">
 
+      {/* Pet Sectors */}
+      <div className="row g-4 mb-5">
+        {sectors.map((item, index) => (
+          <div key={index} className="col-md-3">
+            <div className="sector-card p-3 rounded shadow h-100">
+              <h5 className="text-success">{item.title}</h5>
+              <p>{item.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* About & Contact Section */}
+      <div className="row g-4 mb-5">
         {/* About Us */}
-        <div className="col-md-4 text-white mb-4 bg-dark">
-          <h2 className='text-success'>Know Us</h2>
-          <p>
-            Tara Pet Store Ltd is dedicated to providing   healthy pets  
-            and Cure services. We offer a wide range of pet food, accessories, and care 
-            solutions to ensure your pets live happy and healthy lives. 
-            Our mission is to bring joy to every pet and pet owner.
-          </p>
+        <div className="col-md-4">
+          <div className="p-4 rounded shadow about-card h-100">
+            <h3 className="text-primary mb-3">Know Us</h3>
+            <p>
+              Tara Pet Store Ltd is dedicated to providing healthy pets and care services. 
+              We offer a wide range of pet food, accessories, and care solutions to ensure 
+              your pets live happy and healthy lives. Our mission is to bring joy to every pet and pet owner.
+            </p>
+          </div>
         </div>
 
         {/* Contact Form */}
-        <div className="col-md-4 bg-dark text-success p-4 mb-4 rounded">
-          <h2 className='text-success'>Contact Us</h2>
-          <form>
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="form-control mb-3" 
-            />
-            <textarea 
-              placeholder="Leave a comment" 
-              className="form-control mb-3"
-              rows="3"
-            ></textarea>
-            <input 
-              type="submit" 
-              className="btn btn-danger w-100" 
-              value="Send Message" 
-            />
-          </form>
-        </div>
-
-        {/* Stay Connected */}
-        <div className="col-md-4 text-white mb-4 bg-dark">
-          <h2 className='text-success'>Stay Connected</h2>
-
-          <div className="mb-3">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-              <img src="/img/fb.png" alt="Facebook" width="40" className="me-2" />
-            </a>
-
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-              <img src="/img/in.png" alt="Instagram" width="40" className="me-2" />
-            </a>
-
-            <a href="https://www.x.com" target="_blank" rel="noopener noreferrer">
-              <img src="/img/x.png" alt="X" width="40" />
-            </a>
+        <div className="col-md-4">
+          <div className="p-4 rounded shadow contact-card h-100">
+            <h3 className="text-primary mb-3">Contact Us</h3>
+            <form>
+              <input type="email" placeholder="Enter your email" className="form-control mb-3" />
+              <textarea placeholder="Leave a comment" className="form-control mb-3" rows="3"></textarea>
+              <input type="submit" className="btn btn-primary w-100" value="Send Message" />
+            </form>
           </div>
-
-          <p>
-            Contact us for any inquiries or support. We are always ready to help you 
-            and your pets.
-          </p>
-
-          <p><b>Tel:</b> +254 711 803 601</p>
-          <p><b>Email:</b> pethub@gmail.com</p>
         </div>
 
+        {/* Social & Info */}
+        <div className="col-md-4">
+          <div className="p-4 rounded shadow social-card h-100">
+            <h3 className="text-primary mb-3">Stay Connected</h3>
+            <div className="mb-3 d-flex align-items-center gap-3">
+              {socials.map((social, i) => (
+                <a key={i} href={social.href} target="_blank" rel="noopener noreferrer">
+                  <img src={social.src} alt={social.alt} width="50" className="hover-icon" />
+                </a>
+              ))}
+            </div>
+            <p>Contact us for inquiries or support. We are always ready to help you and your pets.</p>
+            <p><b>Tel:</b> +254 711 803 601</p>
+            <p><b>Email:</b> pethub@gmail.com</p>
+          </div>
+        </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-dark text-center p-4 mt-4 rounded">
-        <b className="text-white">
-          Developed by Tarayia &copy; All rights reserved
-        </b>
+      <footer className="text-center p-4 rounded mt-5 footer">
+        <b>Developed by Tarayia &copy; All rights reserved</b>
       </footer>
     </div>
   );
